@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Tout sur l'informatique : formations pratiques en informatique, programmation, réseaux, cybersécurité, bureautique et intelligence artificielle.">
+<title>Tout sur l'informatique | Apprenez, pratiquez, innovez</title>
+<style>
+:root{--navy:#101b3b;--blue:#315efb;--cyan:#19c6d2;--ink:#18223b;--muted:#667085;--bg:#f5f7fc;--white:#fff;--line:#e6eaf2;--green:#159b72;--shadow:0 14px 40px rgba(16,27,59,.09)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}a{color:inherit;text-decoration:none}button,input,select{font:inherit}.container{width:min(1140px,92%);margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--navy);font-size:1.05rem}.brand-icon{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;color:white;font-size:22px}.navlinks{display:flex;align-items:center;gap:23px;font-size:.92rem;font-weight:650}.navlinks a:hover{color:var(--blue)}.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:12px;padding:12px 18px;font-weight:750;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn-primary{background:var(--blue);color:#fff;box-shadow:0 8px 20px #315efb35}.btn-outline{border:1px solid #cbd5e8;background:#fff;color:var(--navy)}.menu-toggle{display:none;background:none;border:0;font-size:25px}
+.hero{background:radial-gradient(circle at 80% 20%,#2855e8 0,transparent 30%),linear-gradient(125deg,#101b3b,#172b61 70%,#0c7f9a);color:#fff;padding:82px 0 76px;overflow:hidden}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}.eyebrow{display:inline-block;border:1px solid #ffffff55;background:#ffffff12;border-radius:99px;padding:6px 12px;font-size:.82rem;font-weight:750;letter-spacing:.03em}.hero h1{font-size:clamp(2.4rem,5vw,4.35rem);line-height:1.07;letter-spacing:-.04em;margin:20px 0}.hero h1 span{color:#67edf0}.hero p{font-size:1.1rem;color:#dce6ff;max-width:620px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}.hero .btn-outline{background:#ffffff10;color:#fff;border-color:#ffffff66}.trust{display:flex;gap:20px;flex-wrap:wrap;color:#dce6ff;font-size:.9rem}.hero-art{min-height:350px;position:relative;display:grid;place-items:center}.orbit{width:min(340px,80vw);aspect-ratio:1;border:1px solid #ffffff30;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 32px #ffffff08,0 0 0 64px #ffffff05;position:relative}.laptop{width:230px;height:165px;border:9px solid #dce8ff;border-bottom-width:18px;border-radius:14px;background:#101b3b;box-shadow:0 25px 55px #0005;display:flex;align-items:center;justify-content:center;font-size:62px}.float{position:absolute;background:#fff;color:var(--navy);padding:12px 15px;border-radius:14px;box-shadow:var(--shadow);font-weight:800}.float.one{top:25px;right:0}.float.two{bottom:35px;left:0}.float.three{bottom:0;right:18px;background:#c8fff4}
+.stats{margin-top:-28px;position:relative}.stats-grid{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(4,1fr);padding:22px}.stat{text-align:center;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat strong{display:block;color:var(--navy);font-size:1.55rem}.stat span{color:var(--muted);font-size:.88rem}
+section{padding:78px 0}.section-head{text-align:center;max-width:700px;margin:0 auto 34px}.kicker{color:var(--blue);font-weight:850;text-transform:uppercase;letter-spacing:.12em;font-size:.76rem}.section-head h2{font-size:clamp(1.8rem,3vw,2.65rem);line-height:1.2;color:var(--navy);margin:8px 0 12px;letter-spacing:-.03em}.section-head p{color:var(--muted);margin:0}
+.filters{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:0 0 26px}.filter{border:1px solid var(--line);background:white;border-radius:99px;padding:8px 15px;cursor:pointer;font-weight:700;color:#59647b}.filter.active,.filter:hover{background:var(--navy);color:white;border-color:var(--navy)}
+.course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.course{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:.2s}.course:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.course-top{padding:22px 22px 18px;background:linear-gradient(135deg,#eef2ff,#e7fbff);position:relative}.course-icon{width:54px;height:54px;display:grid;place-items:center;border-radius:15px;background:#fff;font-size:28px;box-shadow:0 5px 16px #172b6112}.badge{position:absolute;right:18px;top:20px;background:#d7f9ec;color:#087f5b;border-radius:99px;padding:5px 9px;font-size:.72rem;font-weight:850}.course-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}.course h3{margin:0 0 8px;color:var(--navy);font-size:1.12rem}.course p{margin:0 0 16px;color:var(--muted);font-size:.92rem;flex:1}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:17px}.tag{font-size:.74rem;background:#f0f3f9;color:#536079;border-radius:6px;padding:4px 8px}.course-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:15px}.price{font-size:1.1rem;font-weight:900;color:var(--navy)}.price small{font-size:.72rem;color:var(--muted);font-weight:500}.course-foot .btn{padding:9px 12px;font-size:.85rem}
+.ai-section{background:#101b3b;color:white}.ai-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:55px;align-items:center}.ai-section h2{font-size:clamp(2rem,3.6vw,3rem);line-height:1.13;letter-spacing:-.03em;margin:12px 0}.ai-section p{color:#d2dcf4}.ai-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ai-card{border:1px solid #ffffff24;background:#ffffff0b;border-radius:16px;padding:19px}.ai-card span{font-size:27px}.ai-card h3{margin:8px 0 4px;font-size:1rem}.ai-card p{font-size:.87rem;margin:0}.ai-section .kicker{color:#68e8ed}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.step{background:#fff;border:1px solid var(--line);padding:25px;border-radius:17px}.step-num{width:42px;height:42px;border-radius:13px;background:#e8edff;color:var(--blue);display:grid;place-items:center;font-weight:900}.step h3{color:var(--navy);margin:13px 0 5px}.step p{margin:0;color:var(--muted);font-size:.93rem}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}.about-panel{background:linear-gradient(135deg,#e5eaff,#e3fbf8);border-radius:22px;padding:34px}.about-panel .big{font-size:4rem}.about-panel h3{color:var(--navy);font-size:1.5rem;margin:0 0 8px}.checklist{list-style:none;padding:0;margin:20px 0}.checklist li{margin:10px 0}.checklist li:before{content:"✓";display:inline-grid;place-items:center;background:#d9f8ed;color:#087f5b;width:23px;height:23px;border-radius:50%;font-weight:900;margin-right:10px}
+.faq{max-width:800px;margin:auto}.faq details{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px 20px;margin:10px 0}.faq summary{font-weight:800;cursor:pointer;color:var(--navy)}.faq details p{color:var(--muted);margin-bottom:0}
+.contact{background:#eaf0ff}.contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:35px}.contact-info{background:var(--navy);color:white;border-radius:20px;padding:30px}.contact-info p{color:#d1daf0}.contact-info a{color:#8cebf0}.contact-form{background:white;padding:30px;border:1px solid var(--line);border-radius:20px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:14px}.field label{display:block;font-size:.86rem;font-weight:750;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;padding:12px 13px;border:1px solid #d8deea;border-radius:10px;outline:none;background:#fff}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #315efb18}.field textarea{min-height:100px;resize:vertical}.notice{font-size:.82rem;color:var(--muted);background:#f7f9fd;border-radius:10px;padding:12px;margin:14px 0}
+footer{background:#0b1228;color:#b9c5e0;padding:28px 0}.footer-row{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}.footer-brand{color:white;font-weight:900}
+.modal-backdrop{position:fixed;inset:0;background:#091127b8;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal-backdrop.show{display:flex}.modal{background:white;border-radius:20px;max-width:520px;width:100%;padding:28px;position:relative;box-shadow:0 30px 90px #0004}.modal-close{position:absolute;right:16px;top:12px;border:0;background:none;font-size:27px;cursor:pointer}.modal h2{margin:0 30px 8px;color:var(--navy)}.modal p{color:var(--muted)}.modal-course{background:#f2f5ff;padding:13px;border-radius:12px;font-weight:800}.modal .field{margin-top:12px}.alert{font-size:.85rem;color:#805800;background:#fff4d5;border:1px solid #ffe3a1;border-radius:10px;padding:12px;margin:12px 0}
+@media(max-width:900px){.navlinks{gap:12px}.hero-grid,.ai-grid,.about-grid,.contact-grid{grid-template-columns:1fr}.hero{padding-top:58px}.hero-art{min-height:300px}.course-grid{grid-template-columns:repeat(2,1fr)}.ai-grid{gap:28px}.about-panel{order:-1}}
+@media(max-width:650px){.nav{height:68px}.menu-toggle{display:block}.navlinks{display:none;position:absolute;left:0;right:0;top:68px;background:white;padding:20px 5%;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start}.navlinks.open{display:flex}.nav .nav-cta{display:none}.hero{padding:50px 0 60px}.hero-grid{gap:15px}.hero-art{min-height:260px}.laptop{width:190px;height:140px;font-size:48px}.float{font-size:.82rem;padding:9px 11px}.stats-grid{grid-template-columns:1fr 1fr;gap:15px}.stat:nth-child(2){border:0}.stat:nth-child(3){border:0}.course-grid,.steps,.ai-cards{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.section-head{text-align:left}.section-head{margin-left:0}.contact-form,.contact-info{padding:22px}section{padding:60px 0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#accueil"><span class="brand-icon">⌘</span><span>Tout sur<br>l'informatique</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">☰</button>
+    <nav class="navlinks" id="navlinks">
+      <a href="#formations">Formations</a><a href="#intelligence-artificielle">IA & innovations</a><a href="#fonctionnement">Comment ça marche</a><a href="#apropos">À propos</a><a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary nav-cta" href="#formations">Voir les tutos ↗</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="accueil">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">💡 APPRENDRE • PRATIQUER • PROGRESSER</span>
+      <h1>Votre avenir numérique <span>commence ici.</span></h1>
+      <p>Des tutoriels pratiques en informatique, de la bureautique à la programmation, des réseaux à la cybersécurité, sans oublier les nouvelles possibilités de l'intelligence artificielle.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#formations">Découvrir les formations →</a><a class="btn btn-outline" href="#contact">Poser une question</a></div>
+      <div class="trust"><span>✓ Apprentissage pratique</span><span>✓ Débutants et avancés</span><span>✓ Contenus évolutifs</span></div>
+    </div>
+    <div class="hero-art" aria-label="Illustration informatique">
+      <div class="orbit"><div class="laptop">💻</div><div class="float one">🤖 IA générative</div><div class="float two">🌐 Réseaux & Web</div><div class="float three">🚀 Compétences utiles</div></div>
+    </div>
+  </div>
+</section>
+<div class="container stats"><div class="stats-grid">
+  <div class="stat"><strong>10+</strong><span>domaines à explorer</span></div><div class="stat"><strong>100%</strong><span>orienté pratique</span></div><div class="stat"><strong>À votre rythme</strong><span>apprentissage flexible</span></div><div class="stat"><strong>IA incluse</strong><span>outils et méthodes récents</span></div>
+</div></div>
+
+<section id="formations">
+  <div class="container">
+    <div class="section-head"><span class="kicker">Catalogue de formations</span><h2>Choisissez votre prochain savoir-faire</h2><p>Des tutoriels structurés par niveau. Les prix affichés sont des exemples de lancement et peuvent être ajustés avant publication.</p></div>
+    <div class="filters" id="filters">
+      <button class="filter active" data-filter="Tous">Tout voir</button><button class="filter" data-filter="Bureautique">Bureautique</button><button class="filter" data-filter="Programmation">Programmation</button><button class="filter" data-filter="Réseaux">Réseaux</button><button class="filter" data-filter="IA">Intelligence artificielle</button><button class="filter" data-filter="Sécurité">Cybersécurité</button><button class="filter" data-filter="Création">Création numérique</button>
+    </div>
+    <div class="course-grid" id="courseGrid"></div>
+  </div>
+</section>
+
+<section class="ai-section" id="intelligence-artificielle">
+ <div class="container ai-grid">
+  <div><span class="kicker">Le numérique évolue</span><h2>Faites de l'IA un outil, pas un mystère.</h2><p>Découvrez comment utiliser l'intelligence artificielle pour apprendre plus vite, gagner du temps, créer des contenus et développer des projets, tout en vérifiant les résultats et en protégeant vos données.</p><a class="btn btn-primary" href="#formations">Explorer les tutos IA →</a></div>
+  <div class="ai-cards">
+   <article class="ai-card"><span>💬</span><h3>Bien dialoguer avec une IA</h3><p>Rédiger des prompts précis, améliorer les réponses et travailler par étapes.</p></article>
+   <article class="ai-card"><span>🧑‍💻</span><h3>IA et programmation</h3><p>Comprendre le code généré, corriger les erreurs et prototyper des applications.</p></article>
+   <article class="ai-card"><span>🎨</span><h3>Images, vidéo et contenus</h3><p>Créer des visuels, préparer des scripts et concevoir des supports pédagogiques.</p></article>
+   <article class="ai-card"><span>🛡️</span><h3>IA responsable</h3><p>Vérifier les faits, respecter le droit d'auteur et éviter de partager des données sensibles.</p></article>
+  </div>
+ </div>
+</section>
+
+<section id="fonctionnement">
+ <div class="container">
+  <div class="section-head"><span class="kicker">Simple et transparent</span><h2>Comment suivre une formation ?</h2><p>Le parcours proposé pour commander un tutoriel et accéder au contenu.</p></div>
+  <div class="steps">
+   <article class="step"><div class="step-num">01</div><h3>Choisissez un tuto</h3><p>Consultez le programme, le niveau et le tarif, puis cliquez sur « Demander l'accès ».</p></article>
+   <article class="step"><div class="step-num">02</div><h3>Confirmez votre commande</h3><p>Envoyez votre demande par e-mail ou WhatsApp. Les coordonnées de paiement seront communiquées après leur ajout officiel sur le site.</p></article>
+   <article class="step"><div class="step-num">03</div><h3>Recevez votre accès</h3><p>Après confirmation du paiement, le responsable vous transmettra le lien ou les fichiers de formation selon l'offre choisie.</p></article>
+  </div>
+ </div>
+</section>
+
+<section id="apropos">
+ <div class="container about-grid">
+  <div><span class="kicker">Notre ambition</span><h2 style="font-size:2.35rem;line-height:1.18;color:var(--navy)">Rendre les compétences informatiques accessibles.</h2><p style="color:var(--muted)">« Tout sur l'informatique » a pour vocation de proposer des formations utiles, progressives et adaptées aux besoins des apprenants, étudiants, enseignants, entrepreneurs et professionnels.</p><ul class="checklist"><li>Des parcours du niveau débutant au niveau avancé</li><li>Des exercices et mini-projets pour pratiquer</li><li>Des sujets actualisés autour de l'IA et du numérique</li><li>Un contact direct pour poser vos questions</li></ul></div>
+  <div class="about-panel"><div class="big">🎓</div><h3>Apprendre en faisant</h3><p>Chaque formation peut inclure des leçons vidéo ou PDF, des exercices corrigés, des fichiers pratiques et un projet final. Le contenu exact sera précisé dans chaque fiche de cours.</p></div>
+ </div>
+</section>
+
+<section id="faq">
+ <div class="container"><div class="section-head"><span class="kicker">Questions fréquentes</span><h2>Vous souhaitez en savoir plus ?</h2></div>
+  <div class="faq">
+   <details><summary>Les formations sont-elles disponibles immédiatement ?</summary><p>Ce site est une première version de présentation. Les formations doivent être préparées et hébergées, puis leur lien d'accès sera envoyé après confirmation de la commande.</p></details>
+   <details><summary>Comment effectuer le paiement ?</summary><p>Le numéro ou compte de paiement n'est pas encore renseigné. Ne transférez aucun argent avant d'avoir reçu et vérifié les instructions officielles du responsable.</p></details>
+   <details><summary>Les cours sur l'IA sont-ils destinés aux débutants ?</summary><p>Oui, plusieurs parcours sont conçus pour débuter, avec des explications simples. Certains cours techniques nécessitent toutefois des prérequis indiqués dans leur fiche.</p></details>
+   <details><summary>Le site prend-il automatiquement les paiements ?</summary><p>Non. Cette version permet d'envoyer une demande de commande, mais elle ne traite pas les paiements et ne confirme pas automatiquement les transferts. Une intégration sécurisée sera nécessaire pour automatiser cela.</p></details>
+  </div>
+ </div>
+</section>
+
+<section class="contact" id="contact">
+ <div class="container">
+  <div class="section-head"><span class="kicker">Restons en contact</span><h2>Parlons de votre projet de formation</h2><p>Demandez des informations, un programme détaillé ou une formation adaptée à vos objectifs.</p></div>
+  <div class="contact-grid">
+   <div class="contact-info"><h3>Tout sur l'informatique</h3><p>Votre partenaire pour développer vos compétences numériques.</p><p>📍 <strong>Localisation :</strong><br>Yaoundé, Cameroun</p><p>📞 <strong>Téléphone / WhatsApp :</strong><br><a href="https://wa.me/237620828957" target="_blank" rel="noopener">+237 620 828 957</a></p><p>✉️ <strong>E-mail :</strong><br><a href="mailto:romanicgiresse@gmail.com">romanicgiresse@gmail.com</a></p><div class="notice">Paiement : les coordonnées de transfert seront ajoutées ici après validation. Pour votre sécurité, vérifiez toujours le bénéficiaire avant d'envoyer de l'argent.</div></div>
+   <form class="contact-form" id="contactForm"><h3>Envoyer une demande</h3>
+    <div class="form-row"><div class="field"><label for="name">Nom complet *</label><input id="name" name="name" required placeholder="Votre nom"></div><div class="field"><label for="phone">Téléphone</label><input id="phone" name="phone" placeholder="+237 ..."></div></div>
+    <div class="field"><label for="email">Adresse e-mail *</label><input type="email" id="email" name="email" required placeholder="vous@exemple.com"></div>
+    <div class="field"><label for="topic">Sujet de la demande</label><select id="topic" name="topic"><option>Demande d'information</option><option>Inscription à une formation</option><option>Formation personnalisée</option><option>Partenariat</option></select></div>
+    <div class="field"><label for="message">Votre message *</label><textarea id="message" name="message" required placeholder="Quelle formation vous intéresse ?"></textarea></div>
+    <button class="btn btn-primary" type="submit">Préparer mon e-mail →</button><p style="font-size:.8rem;color:var(--muted)">Ce formulaire ouvre votre application e-mail ; il ne stocke pas les données sur un serveur.</p>
+   </form>
+  </div>
+ </div>
+</section>
+</main>
+<footer><div class="container footer-row"><div><span class="footer-brand">Tout sur l'informatique</span><br><small>Apprenez aujourd'hui, innovez demain.</small></div><small>© <span id="year"></span> Tout sur l'informatique. Tous droits réservés.</small><a href="#accueil">Retour en haut ↑</a></div></footer>
+
+<div class="modal-backdrop" id="courseModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal"><button class="modal-close" id="modalClose" aria-label="Fermer">×</button><h2 id="modalTitle">Demander l'accès</h2><p>Complétez les informations ci-dessous. Votre demande sera préparée dans WhatsApp afin que le responsable puisse vous répondre.</p><div class="modal-course" id="modalCourseName"></div><div class="alert">⚠️ Le paiement n'est pas intégré à cette version. Aucun transfert ne doit être effectué avant réception des coordonnées officielles.</div>
+  <form id="orderForm"><div class="field"><label for="orderName">Votre nom *</label><input id="orderName" required placeholder="Nom complet"></div><div class="field"><label for="orderPhone">Votre numéro de téléphone *</label><input id="orderPhone" required placeholder="+237 ..."></div><button class="btn btn-primary" type="submit" style="width:100%">Envoyer la demande sur WhatsApp</button></form>
+ </div>
+</div>
+<script>
+const courses = [
+ {title:"Bureautique professionnelle",category:"Bureautique",icon:"📊",level:"Débutant",duration:"8 heures",price:5000,desc:"Maîtrisez Word, Excel et PowerPoint pour les études, l'administration et le travail.",tags:["Word","Excel","PowerPoint"],badge:"Essentiel"},
+ {title:"Excel : de zéro à avancé",category:"Bureautique",icon:"📈",level:"Débutant → avancé",duration:"6 heures",price:4000,desc:"Formules, tableaux, graphiques, filtres et tableaux de bord pour analyser vos données.",tags:["Formules","Tableaux","Graphiques"]},
+ {title:"Créer un site web avec HTML, CSS et JS",category:"Programmation",icon:"🌐",level:"Débutant",duration:"12 heures",price:7500,desc:"Construisez un site responsive de A à Z et comprenez les bases du web.",tags:["HTML","CSS","JavaScript"],badge:"Populaire"},
+ {title:"Python et automatisation",category:"Programmation",icon:"🐍",level:"Débutant",duration:"10 heures",price:7000,desc:"Apprenez les bases de Python et automatisez des tâches répétitives avec des scripts.",tags:["Python","Scripts","Projets"]},
+ {title:"Développement d'applications",category:"Programmation",icon:"🧩",level:"Intermédiaire",duration:"15 heures",price:10000,desc:"Découvrez la logique applicative, les API, les bases de données et la mise en projet.",tags:["Logique","API","Données"]},
+ {title:"Réseaux informatiques",category:"Réseaux",icon:"🖧",level:"Débutant → intermédiaire",duration:"10 heures",price:7000,desc:"Comprenez les adresses IP, les routeurs, le Wi-Fi, le câblage et le dépannage réseau.",tags:["TCP/IP","LAN","Dépannage"]},
+ {title:"Maintenance et dépannage PC",category:"Réseaux",icon:"🛠️",level:"Débutant",duration:"8 heures",price:6000,desc:"Diagnostic matériel, installation de systèmes, pilotes, sauvegardes et entretien.",tags:["Matériel","Windows","Diagnostic"]},
+ {title:"Cybersécurité pour débutants",category:"Sécurité",icon:"🛡️",level:"Débutant",duration:"7 heures",price:6000,desc:"Protégez vos appareils, comptes et données ; repérez les arnaques et sécurisez vos accès.",tags:["Sécurité","Mots de passe","Phishing"]},
+ {title:"Linux et administration système",category:"Réseaux",icon:"🐧",level:"Intermédiaire",duration:"12 heures",price:9000,desc:"Commandes Linux, utilisateurs, permissions, services et bases de l'administration système.",tags:["Linux","Terminal","Serveur"]},
+ {title:"Bien utiliser ChatGPT et les IA",category:"IA",icon:"🤖",level:"Tous niveaux",duration:"4 heures",price:5000,desc:"Écrivez de meilleurs prompts, vérifiez les réponses et utilisez l'IA pour apprendre et travailler.",tags:["Prompts","Productivité","Éthique"],badge:"Innovation"},
+ {title:"IA pour créer images et vidéos",category:"IA",icon:"🎨",level:"Débutant",duration:"5 heures",price:6000,desc:"Découvrez les outils génératifs, la préparation de prompts visuels et les bases d'un workflow créatif.",tags:["Images","Vidéo","Créativité"]},
+ {title:"IA pour enseignants et formateurs",category:"IA",icon:"📚",level:"Tous niveaux",duration:"4 heures",price:5000,desc:"Préparez des leçons, exercices corrigés, évaluations et supports pédagogiques avec esprit critique.",tags:["Pédagogie","Exercices","Responsabilité"]},
+ {title:"Design graphique et Canva",category:"Création",icon:"🖌️",level:"Débutant",duration:"6 heures",price:5000,desc:"Concevez des affiches, flyers, présentations et visuels adaptés aux réseaux sociaux.",tags:["Design","Canva","Visuels"]},
+ {title:"Montage vidéo pour le web",category:"Création",icon:"🎬",level:"Débutant",duration:"8 heures",price:6500,desc:"Apprenez à organiser un projet vidéo, monter des séquences, ajouter du texte et exporter.",tags:["Montage","Audio","Export"]}
+];
+const grid=document.getElementById('courseGrid');
+function renderCourses(filter='Tous'){
+ const shown=courses.filter(c=>filter==='Tous'||c.category===filter);
+ grid.innerHTML=shown.map((c)=>`<article class="course"><div class="course-top"><div class="course-icon">${c.icon}</div>${c.badge?`<span class="badge">${c.badge}</span>`:''}</div><div class="course-body"><h3>${c.title}</h3><p>${c.desc}</p><div class="tags"><span class="tag">${c.level}</span><span class="tag">⏱ ${c.duration}</span>${c.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="course-foot"><div class="price">${c.price.toLocaleString('fr-FR')} FCFA <small>/ tuto</small></div><button class="btn btn-primary enroll" data-title="${c.title}" data-price="${c.price}">Demander l'accès</button></div></div></article>`).join('');
+ document.querySelectorAll('.enroll').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.title,Number(b.dataset.price))));
+}
+document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCourses(b.dataset.filter)});
+const modal=document.getElementById('courseModal');let selectedCourse='';
+function openModal(title,price){selectedCourse=title;document.getElementById('modalCourseName').textContent=`${title} — ${price.toLocaleString('fr-FR')} FCFA`;modal.classList.add('show');document.getElementById('orderName').focus()}
+document.getElementById('modalClose').addEventListener('click',()=>modal.classList.remove('show'));
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('show')});
+document.getElementById('orderForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('orderName').value.trim(),phone=document.getElementById('orderPhone').value.trim();const msg=`Bonjour, je souhaite demander l'accès à la formation : ${selectedCourse}.\\nNom : ${name}\\nTéléphone : ${phone}\\nMerci de m'envoyer le programme et les modalités de paiement officielles.`;window.open('https://wa.me/237620828957?text='+encodeURIComponent(msg),'_blank','noopener');modal.classList.remove('show')});
+document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);const subject=encodeURIComponent('Demande depuis Tout sur l’informatique — '+f.get('topic'));const body=encodeURIComponent(`Nom : ${f.get('name')}\\nTéléphone : ${f.get('phone')||'Non renseigné'}\\nE-mail : ${f.get('email')}\\nSujet : ${f.get('topic')}\\n\\nMessage :\\n${f.get('message')}`);window.location.href=`mailto:romanicgiresse@gmail.com?subject=${subject}&body=${body}`});
+document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('open'));
+document.querySelectorAll('#navlinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navlinks').classList.remove('open')));
+document.getElementById('year').textContent=new Date().getFullYear();
+renderCourses();
+</script>
+
+<!-- Espace élève connecté à Supabase -->
+<style>
+.auth-wrap{max-width:1000px;margin:38px auto;padding:24px;background:#fff;border-radius:18px;box-shadow:0 8px 30px #101b3b12;color:#18223b}
+.auth-wrap h2{margin-top:0}.auth-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}.auth-card{border:1px solid #e3e8f2;border-radius:14px;padding:18px}.auth-card label{display:block;font-weight:600;margin:10px 0 5px}.auth-card input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}.auth-btn{border:0;border-radius:9px;padding:12px 16px;margin-top:12px;cursor:pointer;font-weight:700;background:#315efb;color:white}.auth-btn.secondary{background:#eaf0ff;color:#2449c5}.auth-note{font-size:.94rem;color:#667085}.auth-status{padding:12px;border-radius:8px;background:#f2f6ff;margin-top:14px;white-space:pre-wrap}.auth-user{display:none;padding:14px;background:#edfdf5;border-radius:10px;margin-top:15px}
+</style>
+<section class="auth-wrap" id="espace-eleve">
+  <h2>👩🏽‍🎓 Espace élève</h2>
+  <p>Crée ton compte ou connecte-toi pour préparer ton espace de formation.</p>
+  <div class="auth-grid">
+    <form class="auth-card" id="signup-form">
+      <h3>Créer un compte</h3>
+      <label for="signup-name">Nom complet</label><input id="signup-name" autocomplete="name" required maxlength="100" />
+      <label for="signup-email">Adresse e-mail</label><input id="signup-email" type="email" autocomplete="email" required />
+      <label for="signup-password">Mot de passe (8 caractères minimum)</label><input id="signup-password" type="password" autocomplete="new-password" minlength="8" required />
+      <button class="auth-btn" type="submit">Créer mon compte</button>
+    </form>
+    <form class="auth-card" id="login-form">
+      <h3>Déjà inscrit ?</h3>
+      <label for="login-email">Adresse e-mail</label><input id="login-email" type="email" autocomplete="email" required />
+      <label for="login-password">Mot de passe</label><input id="login-password" type="password" autocomplete="current-password" required />
+      <button class="auth-btn" type="submit">Me connecter</button>
+      <button class="auth-btn secondary" type="button" id="reset-password">Mot de passe oublié</button>
+    </form>
+  </div>
+  <div id="auth-user" class="auth-user"><strong>Tu es connecté.</strong><div id="user-email"></div><button class="auth-btn secondary" id="logout-btn" type="button">Me déconnecter</button></div>
+  <div id="auth-status" class="auth-status" role="status" aria-live="polite">Les comptes seront activés après la configuration de Supabase.</div>
+  <p class="auth-note">Important : la création d'un compte ne donne pas automatiquement accès aux formations payantes. Les paiements et l'accès sécurisé aux cours seront configurés séparément.</p>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  const SUPABASE_URL = 'https://vgteprcfnfleykyfjbgt.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_nI3CqzViF3ItHnwN5XPrTg_ecJqf3-F';
+  const statusEl = document.getElementById('auth-status');
+  const userPanel = document.getElementById('auth-user');
+  const userEmail = document.getElementById('user-email');
+  const setStatus = (msg) => { statusEl.textContent = msg; };
+  if (!window.supabase || !window.supabase.createClient) {
+    setStatus('Impossible de charger le service de connexion. Vérifie ta connexion Internet puis recharge la page.'); return;
+  }
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const refreshUser = async () => {
+    const { data: { user }, error } = await client.auth.getUser();
+    if (error) { userPanel.style.display = 'none'; return; }
+    if (user) { userEmail.textContent = user.email || ''; userPanel.style.display = 'block'; }
+    else { userPanel.style.display = 'none'; }
+  };
+  document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('signup-name').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value;
+    setStatus('Création du compte en cours…');
+    const { data, error } = await client.auth.signUp({ email, password, options: { data: { full_name: name }, emailRedirectTo: window.location.href.split('#')[0] } });
+    if (error) { setStatus('Inscription impossible : ' + error.message); return; }
+    if (data.session) setStatus('Compte créé et connecté. Tu peux maintenant te connecter à ton espace élève.');
+    else setStatus('Demande d’inscription envoyée. Consulte ta boîte e-mail et confirme ton adresse avant de te connecter. Vérifie aussi les courriers indésirables.');
+    await refreshUser();
+  });
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    setStatus('Connexion en cours…');
+    const { error } = await client.auth.signInWithPassword({ email, password });
+    if (error) { setStatus('Connexion impossible : ' + error.message); return; }
+    setStatus('Connexion réussie.'); await refreshUser();
+  });
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    const { error } = await client.auth.signOut();
+    setStatus(error ? 'Déconnexion impossible : ' + error.message : 'Tu es déconnecté.');
+    await refreshUser();
+  });
+  document.getElementById('reset-password').addEventListener('click', async () => {
+    const email = document.getElementById('login-email').value.trim();
+    if (!email) { setStatus('Entre d’abord ton adresse e-mail dans le formulaire de connexion.'); return; }
+    setStatus('Envoi du lien de réinitialisation…');
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: window.location.href.split('#')[0] });
+    setStatus(error ? 'Erreur : ' + error.message : 'Si cette adresse est enregistrée, un lien de réinitialisation va être envoyé. Vérifie ta boîte e-mail.');
+  });
+  client.auth.onAuthStateChange(() => { refreshUser(); });
+  refreshUser();
+  setStatus('Service de connexion chargé. Tu peux créer un compte ou te connecter.');
+})();
+</script>
+
+</body>
+</html>
