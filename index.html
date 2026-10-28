@@ -152,10 +152,38 @@ const courses = [
 ];
 const grid=document.getElementById('courseGrid');
 function renderCourses(filter='Tous'){
- const shown=courses.filter(c=>filter==='Tous'||c.category===filter);
- grid.innerHTML=shown.map((c)=>`<article class="course"><div class="course-top"><div class="course-icon">${c.icon}</div>${c.badge?`<span class="badge">${c.badge}</span>`:''}</div><div class="course-body"><h3>${c.title}</h3><p>${c.desc}</p><div class="tags"><span class="tag">${c.level}</span><span class="tag">⏱ ${c.duration}</span>${c.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="course-foot"><div class="price">${c.price.toLocaleString('fr-FR')} FCFA <small>/ tuto</small></div><button class="btn btn-primary enroll" data-title="${c.title}" data-price="${c.price}">Demander l'accès</button></div></div></article>`).join('');
- document.querySelectorAll('.enroll').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.title,Number(b.dataset.price))));
-}
+const shown=courses.filter(c=>filter==='Tous'||c.category===filter);
+
+grid.innerHTML=shown.map(c=>`
+
+ <article class="course">
+  <div class="course-top">
+   <div class="course-icon">${c.icon}</div>
+   ${c.badge?`<span class="badge">${c.badge}</span>`:''}
+  </div>
+  <div class="course-body">
+   <h3>${c.title}</h3>
+   <p>${c.desc}</p>
+   <div class="tags">
+    <span class="tag">${c.level}</span>
+    <span class="tag">⏱ ${c.duration}</span>
+    ${c.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}
+   </div>
+   <div class="course-foot">
+    <div class="price">${c.pdf?'Gratuit':c.price.toLocaleString('fr-FR')+' FCFA'} <small>${c.pdf?'':'/ tuto'}</small></div>
+    ${c.pdf?`
+     <a class="btn btn-primary" href="${c.pdf}" target="_blank" rel="noopener">Consulter la formation</a>
+     <a class="btn btn-secondary" href="${c.pdf}" download>Télécharger le PDF</a>
+    `:`
+     <button class="btn btn-primary enroll" data-title="${c.title}" data-price="${c.price}">Demander l'accès</button>
+    `}
+   </div>
+  </div>
+ </article>
+ `).join('');document.querySelectorAll('.enroll').forEach(b=>
+b.addEventListener('click',()=>openModal(b.dataset.title,Number(b.dataset.price)))
+);
+                                                                                                                                                                                                                   }
 document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCourses(b.dataset.filter)});
 const modal=document.getElementById('courseModal');let selectedCourse='';
 function openModal(title,price){selectedCourse=title;document.getElementById('modalCourseName').textContent=`${title} — ${price.toLocaleString('fr-FR')} FCFA`;modal.classList.add('show');document.getElementById('orderName').focus()}
