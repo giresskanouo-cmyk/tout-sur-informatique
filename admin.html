@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration | Tout sur l'informatique</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      margin: 0;
+      padding: 20px;
+      color: #1f2937;
+    }
+    .box {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px #00000012;
+    }
+    h1 { color: #123c69; font-size: 25px; }
+    label { display: block; margin-top: 15px; }
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: 1px solid #ccd3df;
+      border-radius: 7px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 7px;
+      background: #123c69;
+      color: white;
+      font-weight: bold;
+    }
+    #message { margin-top: 15px; line-height: 1.5; }
+    a { color: #123c69; }
+  </style>
+</head>
+<body>
+  <main class="box">
+    <h1>Administration</h1>
+    <p>Tout sur l'informatique</p>
 
+    <form id="loginForm">
+      <label for="email">Adresse e-mail</label>
+      <input id="email" type="email" autocomplete="username" required>
+
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <p id="message" role="status"></p>
+    <p><a href="./index.html">Retour au site</a></p>
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://vgteprcfnfleykyfjbgt.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_nI3CqzViF3ItHnwN5XPrTg_ecJqf3-F';
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const form = document.getElementById('loginForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      message.textContent = 'Vérification en cours...';
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        message.textContent = 'Connexion impossible. Vérifie ton e-mail et ton mot de passe.';
+        return;
+      }
+
+      const { data: roleData, error: roleError } = await supabaseClient
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', data.user.id)
+        .maybeSingle();
+
+      if (roleError || !roleData || roleData.role !== 'admin') {
+        await supabaseClient.auth.signOut();
+        message.textContent = "Accès refusé : ce compte n'est pas administrateur.";
+        return;
+      }
+
+      message.textContent = 'Connexion administrateur réussie. La prochaine étape ajoutera la gestion des formations.';
+      form.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
