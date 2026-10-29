@@ -367,6 +367,7 @@ async function loadPublishedCourses() {
         );
     } catch (error) {
         console.error('Chargement des formations impossible :', error);
+alert('Erreur de chargement des formations : ' + error.message);
         catalogCourses = [...courses];
         renderCourses(currentFilter);
     }
