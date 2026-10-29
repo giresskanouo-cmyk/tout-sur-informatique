@@ -326,8 +326,8 @@ async function loadPublishedCourses() {
             `${supabaseUrl}/rest/v1/courses?select=id,title,category,icon,level,duration,price,description,tags,badge,is_published&is_published=eq.true&order=created_at.desc`,
             {
                 headers: {
-                    apikey: publishableKey,
-                    Authorization: `Bearer ${publishableKey}`
+                    apikey: publishableKey
+                
                 }
             }
         );
