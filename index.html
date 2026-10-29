@@ -150,52 +150,230 @@ const courses = [
 {title:"Initiation à l'informatique",category:"Informatique générale",icon:"💻",level:"Débutant",duration:"Formation complète",price:0,desc:"Découvrez les bases de l'informatique, les composants, Windows, Internet, la sécurité et une introduction à l'intelligence artificielle.",tags:["Débutant","Windows","Internet"],badge:"Formation disponible",pdf:"formation_1_initiation_informatique_avec_IA.pdf"},
 {title:"Maintenance et dépannage informatique",category:"Maintenance",icon:"🛠️",level:"Débutant",duration:"Formation complète",price:0,desc:"Apprenez à entretenir un ordinateur, diagnostiquer les pannes, installer un système et protéger vos données.",tags:["Matériel","Installation","Dépannage"],badge:"Formation disponible",pdf:"formation_2_maintenance_et_depannage.pdf"}
 ];
-const grid=document.getElementById('courseGrid');
-function renderCourses(filter='Tous'){
-const shown=courses.filter(c=>filter==='Tous'||c.category===filter);
+const grid = document.getElementById('courseGrid');
 
-grid.innerHTML=shown.map(c=>`
+let catalogCourses = [...courses];
+let currentFilter = 'Tous';
 
- <article class="course">
-  <div class="course-top">
-   <div class="course-icon">${c.icon}</div>
-   ${c.badge?`<span class="badge">${c.badge}</span>`:''}
-  </div>
-  <div class="course-body">
-   <h3>${c.title}</h3>
-   <p>${c.desc}</p>
-   <div class="tags">
-    <span class="tag">${c.level}</span>
-    <span class="tag">⏱ ${c.duration}</span>
-    ${c.tags.slice(0,2).map(t=>`<span class="tag">${t}</span>`).join('')}
-   </div>
-   <div class="course-foot">
-    <div class="price">${c.pdf?'Gratuit':c.price.toLocaleString('fr-FR')+' FCFA'} <small>${c.pdf?'':'/ tuto'}</small></div>
-    ${c.pdf?`
-     <a class="btn btn-primary" href="${c.pdf}" target="_blank" rel="noopener">Consulter la formation</a>
-     <a class="btn btn-secondary" href="${c.pdf}" download>Télécharger le PDF</a>
-    `:`
-     <button class="btn btn-primary enroll" data-title="${c.title}" data-price="${c.price}">Demander l'accès</button>
-    `}
-   </div>
-  </div>
- </article>
- `).join('');document.querySelectorAll('.enroll').forEach(b=>
-b.addEventListener('click',()=>openModal(b.dataset.title,Number(b.dataset.price)))
-);
-                                                                                                                                                                                                                   }
-document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCourses(b.dataset.filter)});
-const modal=document.getElementById('courseModal');let selectedCourse='';
-function openModal(title,price){selectedCourse=title;document.getElementById('modalCourseName').textContent=`${title} — ${price.toLocaleString('fr-FR')} FCFA`;modal.classList.add('show');document.getElementById('orderName').focus()}
-document.getElementById('modalClose').addEventListener('click',()=>modal.classList.remove('show'));
-modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show')});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('show')});
-document.getElementById('orderForm').addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('orderName').value.trim(),phone=document.getElementById('orderPhone').value.trim();const msg=`Bonjour, je souhaite demander l'accès à la formation : ${selectedCourse}.\\nNom : ${name}\\nTéléphone : ${phone}\\nMerci de m'envoyer le programme et les modalités de paiement officielles.`;window.open('https://wa.me/237620828957?text='+encodeURIComponent(msg),'_blank','noopener');modal.classList.remove('show')});
-document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);const subject=encodeURIComponent('Demande depuis Tout sur l’informatique — '+f.get('topic'));const body=encodeURIComponent(`Nom : ${f.get('name')}\\nTéléphone : ${f.get('phone')||'Non renseigné'}\\nE-mail : ${f.get('email')}\\nSujet : ${f.get('topic')}\\n\\nMessage :\\n${f.get('message')}`);window.location.href=`mailto:romanicgiresse@gmail.com?subject=${subject}&body=${body}`});
-document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('open'));
-document.querySelectorAll('#navlinks a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navlinks').classList.remove('open')));
-document.getElementById('year').textContent=new Date().getFullYear();
+function categoryMatches(category, filter) {
+    if (filter === 'Tous') return true;
+
+    const aliases = {
+        'Sécurité': ['Sécurité', 'Cybersécurité'],
+        'IA': ['IA', 'Intelligence artificielle'],
+        'Création': ['Création', 'Création numérique']
+    };
+
+    return (aliases[filter] || [filter]).includes(category);
+}
+
+function renderCourses(filter = currentFilter) {
+    currentFilter = filter;
+
+    const shown = catalogCourses.filter(c =>
+        categoryMatches(c.category, filter)
+    );
+
+    grid.innerHTML = shown.map(c => `
+        <article class="course">
+            <div class="course-top">
+                <div class="course-icon">${c.icon || '💻'}</div>
+                ${c.badge ? `<span class="badge">${c.badge}</span>` : ''}
+            </div>
+
+            <div class="course-body">
+                <h3>${c.title}</h3>
+                <p>${c.desc || ''}</p>
+
+                <div class="tags">
+                    <span class="tag">${c.level || 'Débutant'}</span>
+                    <span class="tag">⏱ ${c.duration || 'À définir'}</span>
+                    ${(c.tags || []).slice(0, 2)
+                        .map(t => `<span class="tag">${t}</span>`).join('')}
+                </div>
+
+                <div class="course-foot">
+                    <div class="price">
+                        ${c.pdf ? 'Gratuit' :
+                          Number(c.price) === 0 ? 'Gratuit' :
+                          Number(c.price).toLocaleString('fr-FR') + ' FCFA'}
+                        <small>${c.pdf || Number(c.price) === 0 ? '' : '/ tuto'}</small>
+                    </div>
+
+                    ${c.pdf ? `
+                        <a class="btn btn-primary"
+                           href="${c.pdf}"
+                           target="_blank"
+                           rel="noopener">Consulter la formation</a>
+                        <a class="btn btn-secondary"
+                           href="${c.pdf}"
+                           download>Télécharger le PDF</a>
+                    ` : `
+                        <button class="btn btn-primary enroll"
+                            data-title="${String(c.title).replace(/"/g, '&quot;')}"
+                            data-price="${Number(c.price) || 0}">
+                            Demander l'accès
+                        </button>
+                    `}
+                </div>
+            </div>
+        </article>
+    `).join('');
+
+    document.querySelectorAll('.enroll').forEach(button => {
+        button.addEventListener('click', () => {
+            openModal(button.dataset.title, Number(button.dataset.price));
+        });
+    });
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+    const button = e.target.closest('[data-filter]');
+    if (!button) return;
+
+    document.querySelectorAll('.filter').forEach(item =>
+        item.classList.remove('active')
+    );
+
+    button.classList.add('active');
+    renderCourses(button.dataset.filter);
+});
+
+const modal = document.getElementById('courseModal');
+let selectedCourse = '';
+
+function openModal(title, price) {
+    selectedCourse = title;
+
+    document.getElementById('modalCourseName').textContent =
+        `${title} — ${price.toLocaleString('fr-FR')} FCFA`;
+
+    modal.classList.add('show');
+    document.getElementById('orderName').focus();
+}
+
+document.getElementById('modalClose').addEventListener('click', () => {
+    modal.classList.remove('show');
+});
+
+modal.addEventListener('click', e => {
+    if (e.target === modal) modal.classList.remove('show');
+});
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') modal.classList.remove('show');
+});
+
+document.getElementById('orderForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name = document.getElementById('orderName').value.trim();
+    const phone = document.getElementById('orderPhone').value.trim();
+
+    const message =
+        `Bonjour, je souhaite demander l'accès à la formation : ${selectedCourse}.\n` +
+        `Nom : ${name}\nTéléphone : ${phone}\n` +
+        `Merci de m'envoyer le programme et les modalités de paiement officielles.`;
+
+    window.open(
+        'https://wa.me/237620828957?text=' + encodeURIComponent(message),
+        '_blank',
+        'noopener'
+    );
+
+    modal.classList.remove('show');
+});
+
+document.getElementById('contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const form = new FormData(e.target);
+    const subject = encodeURIComponent(
+        'Demande depuis Tout sur l’informatique — ' + form.get('topic')
+    );
+
+    const body = encodeURIComponent(
+        `Nom : ${form.get('name')}\n` +
+        `Téléphone : ${form.get('phone') || 'Non renseigné'}\n` +
+        `E-mail : ${form.get('email')}\n` +
+        `Sujet : ${form.get('topic')}\n\n` +
+        `Message :\n${form.get('message')}`
+    );
+
+    window.location.href =
+        `mailto:romanicgiresse@gmail.com?subject=${subject}&body=${body}`;
+});
+
+document.getElementById('menuToggle').addEventListener('click', () => {
+    document.getElementById('navlinks').classList.toggle('open');
+});
+
+document.querySelectorAll('#navlinks a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.getElementById('navlinks').classList.remove('open');
+    });
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+async function loadPublishedCourses() {
+    const supabaseUrl = 'https://vgteprcfnfleykyfjbgt.supabase.co';
+    const publishableKey =
+        'sb_publishable_nI3CqzViF3ItHnwN5XPrTg_ecJqf3-F';
+
+    try {
+        const response = await fetch(
+            `${supabaseUrl}/rest/v1/courses?select=id,title,category,icon,level,duration,price,description,tags,badge,is_published&is_published=eq.true&order=created_at.desc`,
+            {
+                headers: {
+                    apikey: publishableKey,
+                    Authorization: `Bearer ${publishableKey}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Erreur Supabase : ${response.status}`);
+        }
+
+        const databaseCourses = await response.json();
+
+        const convertedCourses = databaseCourses.map(course => ({
+            id: course.id,
+            title: course.title,
+            category: course.category || 'Informatique générale',
+            icon: course.icon || '💻',
+            level: course.level || 'Débutant',
+            duration: course.duration || 'À définir',
+            price: Number(course.price) || 0,
+            desc: course.description || '',
+            tags: Array.isArray(course.tags) ? course.tags : [],
+            badge: course.badge || 'Nouvelle formation'
+        }));
+
+        const existingTitles = new Set(
+            courses.map(course => course.title.trim().toLowerCase())
+        );
+
+        const newCourses = convertedCourses.filter(course =>
+            !existingTitles.has(course.title.trim().toLowerCase())
+        );
+
+        catalogCourses = [...courses, ...newCourses];
+        renderCourses(currentFilter);
+
+        console.log(
+            `${newCourses.length} nouvelle(s) formation(s) chargée(s) depuis Supabase.`
+        );
+    } catch (error) {
+        console.error('Chargement des formations impossible :', error);
+        catalogCourses = [...courses];
+        renderCourses(currentFilter);
+    }
+}
+
 renderCourses();
+loadPublishedCourses();
 </script>
 
 <!-- Espace élève connecté à Supabase -->
