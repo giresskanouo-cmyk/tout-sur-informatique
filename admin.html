@@ -1,113 +1,442 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administration | Tout sur l'informatique</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f3f6fb;
-      margin: 0;
-      padding: 20px;
-      color: #1f2937;
-    }
-    .box {
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 25px;
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 4px 20px #00000012;
-    }
-    h1 { color: #123c69; font-size: 25px; }
-    label { display: block; margin-top: 15px; }
-    input {
-      box-sizing: border-box;
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border: 1px solid #ccd3df;
-      border-radius: 7px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 18px;
-      border: 0;
-      border-radius: 7px;
-      background: #123c69;
-      color: white;
-      font-weight: bold;
-    }
-    #message { margin-top: 15px; line-height: 1.5; }
-    a { color: #123c69; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administration | Tout sur l'informatique</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--navy:#102b50;--blue:#1769aa;--bg:#f3f6fb;--border:#dce3ed}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#1e293b}
+header{background:var(--navy);color:white;padding:18px}
+header h1{margin:0;font-size:22px}
+header p{margin:7px 0 0;color:#dbeafe}
+main{max-width:1100px;margin:22px auto;padding:0 14px}
+.card{background:white;padding:20px;border-radius:14px;margin-bottom:18px;box-shadow:0 4px 16px #102b5010}
+h2{margin-top:0;color:var(--navy);font-size:20px}
+label{display:block;font-weight:bold;margin:13px 0 6px}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--border);border-radius:7px;font:inherit}
+textarea{min-height:90px;resize:vertical}
+button,.button{display:inline-block;border:0;border-radius:7px;padding:11px 15px;background:var(--blue);color:white;font-weight:bold;cursor:pointer;margin:8px 5px 0 0}
+button.secondary{background:#64748b}
+button.danger{background:#b42318}
+button:disabled{opacity:.6;cursor:wait}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.row{border:1px solid var(--border);padding:14px;border-radius:10px;margin-top:12px}
+.row h3{margin:0 0 8px}
+.badge{display:inline-block;background:#e5efff;color:#174ea6;border-radius:20px;padding:4px 9px;font-size:12px}
+.muted{color:#64748b;font-size:14px;line-height:1.5}
+#notice{padding:12px;border-radius:8px;margin-bottom:15px;display:none;white-space:pre-wrap}
+#loginPanel{max-width:480px;margin:35px auto}
+.hidden{display:none!important}
+a{color:var(--blue)}
+</style>
 </head>
 <body>
-  <main class="box">
-    <h1>Administration</h1>
-    <p>Tout sur l'informatique</p>
+<header>
+  <h1>⌘ Tout sur l'informatique</h1>
+  <p>Tableau de bord administrateur</p>
+</header>
 
+<main>
+  <div id="notice" role="status"></div>
+
+  <section id="loginPanel" class="card">
+    <h2>Connexion administrateur</h2>
+    <p class="muted">Connecte-toi avec le compte qui possède le rôle admin dans Supabase.</p>
     <form id="loginForm">
       <label for="email">Adresse e-mail</label>
       <input id="email" type="email" autocomplete="username" required>
-
       <label for="password">Mot de passe</label>
       <input id="password" type="password" autocomplete="current-password" required>
-
       <button type="submit">Se connecter</button>
     </form>
-
-    <p id="message" role="status"></p>
     <p><a href="./index.html">Retour au site</a></p>
-  </main>
+  </section>
 
-  <script>
-    const SUPABASE_URL = 'https://vgteprcfnfleykyfjbgt.supabase.co';
-    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_nI3CqzViF3ItHnwN5XPrTg_ecJqf3-F';
+  <section id="dashboard" class="hidden">
+    <div class="card">
+      <strong>Session administrateur</strong>
+      <span id="adminEmail" class="muted"></span>
+      <button id="logoutButton" class="secondary">Se déconnecter</button>
+    </div>
 
-    const supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+    <section class="card">
+      <h2 id="formTitle">Ajouter une formation</h2>
+      <form id="courseForm">
+        <input id="courseId" type="hidden">
 
-    const form = document.getElementById('loginForm');
-    const message = document.getElementById('message');
+        <div class="grid">
+          <div>
+            <label for="title">Titre de la formation *</label>
+            <input id="title" required maxlength="160">
+          </div>
+          <div>
+            <label for="category">Catégorie *</label>
+            <select id="category" required>
+              <option>Informatique générale</option>
+              <option>Maintenance</option>
+              <option>Systèmes d'exploitation</option>
+              <option>Bureautique</option>
+              <option>Réseaux</option>
+              <option>Programmation</option>
+              <option>Bases de données</option>
+              <option>Intelligence artificielle</option>
+              <option>Sécurité</option>
+              <option>Création numérique</option>
+            </select>
+          </div>
+          <div>
+            <label for="icon">Icône (emoji)</label>
+            <input id="icon" value="💻" maxlength="12">
+          </div>
+          <div>
+            <label for="level">Niveau</label>
+            <select id="level">
+              <option>Débutant</option>
+              <option>Débutant à intermédiaire</option>
+              <option>Intermédiaire</option>
+              <option>Avancé</option>
+              <option>Tous niveaux</option>
+            </select>
+          </div>
+          <div>
+            <label for="duration">Durée</label>
+            <input id="duration" placeholder="Ex. : 10 heures">
+          </div>
+          <div>
+            <label for="price">Prix en FCFA *</label>
+            <input id="price" type="number" min="0" step="1" value="0" required>
+          </div>
+        </div>
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      message.textContent = 'Vérification en cours...';
+        <label for="description">Description *</label>
+        <textarea id="description" required maxlength="3000"></textarea>
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+        <label for="tags">Mots-clés (séparés par des virgules)</label>
+        <input id="tags" placeholder="Ex. : IA, pratique, débutant">
 
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
+        <label for="badge">Badge facultatif</label>
+        <input id="badge" placeholder="Ex. : Nouveau cours">
+
+        <label for="pdfFile">Fichier PDF de la formation</label>
+        <input id="pdfFile" type="file" accept="application/pdf,.pdf">
+        <p class="muted">Taille maximale : 20 Mo. Le fichier sera stocké dans le bucket privé formations-pdf. Laisse ce champ vide pour conserver le PDF existant lors d'une modification.</p>
+        <p id="existingPdf" class="muted"></p>
+
+        <label>
+          <input id="published" type="checkbox" style="width:auto">
+          Publier cette formation dans le catalogue
+        </label>
+
+        <button id="saveButton" type="submit">Enregistrer la formation</button>
+        <button id="cancelEdit" type="button" class="secondary hidden">Annuler la modification</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Mes formations</h2>
+      <p class="muted">Les formations publiées peuvent être lues par le catalogue connecté à Supabase. La publication seule ne donne pas accès aux PDF privés.</p>
+      <button id="refreshButton" class="secondary">Actualiser la liste</button>
+      <div id="courseList"></div>
+    </section>
+  </section>
+</main>
+
+<script>
+(function(){
+  const SUPABASE_URL = 'https://vgteprcfnfleykyfjbgt.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_nI3CqzViF3ItHnwN5XPrTg_ecJqf3-F';
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const $ = id => document.getElementById(id);
+  let currentUser = null;
+  let currentPdfPath = null;
+  let busy = false;
+
+  function notice(text, type='info'){
+    const box = $('notice');
+    box.textContent = text;
+    box.style.display = 'block';
+    box.style.background = type === 'error' ? '#fee2e2' : type === 'success' ? '#dcfce7' : '#e5efff';
+    box.style.color = type === 'error' ? '#991b1b' : type === 'success' ? '#166534' : '#1e40af';
+    box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+
+  function setBusy(value){
+    busy = value;
+    $('saveButton').disabled = value;
+    $('logoutButton').disabled = value;
+  }
+
+  async function checkAdmin(){
+    const {data:{session},error:sessionError} = await supabaseClient.auth.getSession();
+    if(sessionError) throw sessionError;
+    if(!session){
+      currentUser = null;
+      $('loginPanel').classList.remove('hidden');
+      $('dashboard').classList.add('hidden');
+      return false;
+    }
+
+    const {data:roleData,error:roleError} = await supabaseClient
+      .from('user_roles')
+      .select('role')
+      .eq('user_id',session.user.id)
+      .maybeSingle();
+
+    if(roleError || !roleData || roleData.role !== 'admin'){
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      $('loginPanel').classList.remove('hidden');
+      $('dashboard').classList.add('hidden');
+      throw new Error("Accès refusé : ce compte n'a pas le rôle administrateur.");
+    }
+
+    currentUser = session.user;
+    $('adminEmail').textContent = ' — ' + (currentUser.email || '');
+    $('loginPanel').classList.add('hidden');
+    $('dashboard').classList.remove('hidden');
+    return true;
+  }
+
+  $('loginForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(busy)return;
+    setBusy(true);
+    try{
+      const {error} = await supabaseClient.auth.signInWithPassword({
+        email:$('email').value.trim(),
+        password:$('password').value
       });
+      if(error) throw error;
+      await checkAdmin();
+      await loadCourses();
+      notice('Connexion administrateur réussie.','success');
+    }catch(err){
+      notice(err.message || 'Connexion impossible. Vérifie tes identifiants et ton rôle administrateur.','error');
+    }finally{setBusy(false);}
+  });
 
-      if (error) {
-        message.textContent = 'Connexion impossible. Vérifie ton e-mail et ton mot de passe.';
-        return;
-      }
+  $('logoutButton').addEventListener('click',async()=>{
+    try{
+      const {error}=await supabaseClient.auth.signOut();
+      if(error)throw error;
+      $('dashboard').classList.add('hidden');
+      $('loginPanel').classList.remove('hidden');
+      notice('Tu es déconnecté.','success');
+    }catch(err){notice(err.message,'error');}
+  });
 
-      const { data: roleData, error: roleError } = await supabaseClient
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', data.user.id)
-        .maybeSingle();
+  function resetForm(){
+    $('courseForm').reset();
+    $('courseId').value='';
+    $('icon').value='💻';
+    $('price').value='0';
+    currentPdfPath=null;
+    $('existingPdf').textContent='';
+    $('formTitle').textContent='Ajouter une formation';
+    $('saveButton').textContent='Enregistrer la formation';
+    $('cancelEdit').classList.add('hidden');
+  }
+  $('cancelEdit').addEventListener('click',resetForm);
 
-      if (roleError || !roleData || roleData.role !== 'admin') {
-        await supabaseClient.auth.signOut();
-        message.textContent = "Accès refusé : ce compte n'est pas administrateur.";
-        return;
-      }
-
-      message.textContent = 'Connexion administrateur réussie. La prochaine étape ajoutera la gestion des formations.';
-      form.style.display = 'none';
+  async function uploadPdf(file){
+    if(!file)return currentPdfPath;
+    if(file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')){
+      throw new Error('Choisis un fichier PDF.');
+    }
+    if(file.size > 20*1024*1024) throw new Error('Le PDF dépasse la limite de 20 Mo.');
+    const safeName=file.name.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9._-]/g,'_');
+    const path=crypto.randomUUID()+'-'+safeName;
+    const {error}=await supabaseClient.storage.from('formations-pdf').upload(path,file,{
+      contentType:'application/pdf',
+      upsert:false
     });
-  </script>
+    if(error)throw error;
+    return path;
+  }
+
+  $('courseForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(busy)return;
+    setBusy(true);
+    let uploadedPath=null;
+    try{
+      const file=$('pdfFile').files[0] || null;
+      if(file){
+        uploadedPath=await uploadPdf(file);
+      }
+
+      const course={
+        title:$('title').value.trim(),
+        category:$('category').value,
+        icon:$('icon').value.trim() || '💻',
+        level:$('level').value,
+        duration:$('duration').value.trim() || 'À définir',
+        price:Number($('price').value),
+        description:$('description').value.trim(),
+        tags:$('tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+        badge:$('badge').value.trim() || null,
+        pdf_path:uploadedPath || currentPdfPath,
+        is_published:$('published').checked,
+        updated_at:new Date().toISOString()
+      };
+
+      if(!Number.isInteger(course.price) || course.price < 0){
+        throw new Error('Le prix doit être un nombre entier positif en FCFA.');
+      }
+
+      let result;
+      const id=$('courseId').value;
+      if(id){
+        result=await supabaseClient.from('courses').update(course).eq('id',id).select().single();
+      }else{
+        result=await supabaseClient.from('courses').insert(course).select().single();
+      }
+      if(result.error)throw result.error;
+
+      if(uploadedPath && currentPdfPath && uploadedPath !== currentPdfPath){
+        const {error:removeError}=await supabaseClient.storage.from('formations-pdf').remove([currentPdfPath]);
+        if(removeError) notice('Formation enregistrée, mais l’ancien PDF n’a pas pu être supprimé.','error');
+      }
+
+      resetForm();
+      await loadCourses();
+      notice('Formation enregistrée avec succès.','success');
+    }catch(err){
+      if(uploadedPath){
+        await supabaseClient.storage.from('formations-pdf').remove([uploadedPath]);
+      }
+      notice(err.message || 'Impossible d’enregistrer la formation.','error');
+    }finally{setBusy(false);}
+  });
+
+  function makeText(tag,text,className){
+    const el=document.createElement(tag);
+    el.textContent=text ?? '';
+    if(className)el.className=className;
+    return el;
+  }
+
+  async function loadCourses(){
+    const list=$('courseList');
+    list.replaceChildren(makeText('p','Chargement des formations...','muted'));
+    const {data,error}=await supabaseClient.from('courses')
+      .select('id,title,category,icon,level,duration,price,description,tags,badge,pdf_path,is_published,created_at')
+      .order('created_at',{ascending:false});
+    if(error){
+      list.replaceChildren(makeText('p','Impossible de charger les formations : '+error.message,'muted'));
+      return;
+    }
+    list.replaceChildren();
+    if(!data.length){
+      list.append(makeText('p','Aucune formation enregistrée pour le moment.','muted'));
+      return;
+    }
+
+    for(const course of data){
+      const row=makeText('article','','row');
+      const heading=makeText('h3',(course.icon || '💻')+' '+course.title);
+      const badge=makeText('span',course.is_published?'Publiée':'Brouillon','badge');
+      const details=makeText('p',course.category+' • '+course.level+' • '+course.duration+' • '+Number(course.price).toLocaleString('fr-FR')+' FCFA','muted');
+      const description=makeText('p',course.description,'muted');
+      row.append(heading,badge,details,description);
+
+      if(course.pdf_path){
+        row.append(makeText('p','PDF privé associé : '+course.pdf_path,'muted'));
+        const pdfButton=makeText('button','Créer un lien temporaire');
+        pdfButton.type='button';
+        pdfButton.addEventListener('click',async()=>{
+          const {data:linkData,error:linkError}=await supabaseClient.storage
+            .from('formations-pdf').createSignedUrl(course.pdf_path,60);
+          if(linkError){notice('Impossible de créer le lien : '+linkError.message,'error');return;}
+          const link=document.createElement('a');
+          link.href=linkData.signedUrl;
+          link.target='_blank';
+          link.rel='noopener noreferrer';
+          link.textContent='Ouvrir le PDF (lien valable 60 secondes)';
+          row.append(link);
+          notice('Lien temporaire créé. Ne le partage pas publiquement.','success');
+        });
+        row.append(pdfButton);
+      }
+
+      const edit=makeText('button','Modifier');
+      edit.type='button';
+      edit.addEventListener('click',()=>editCourse(course));
+      const toggle=makeText('button',course.is_published?'Dépublier':'Publier','secondary');
+      toggle.type='button';
+      toggle.addEventListener('click',()=>togglePublished(course));
+      const remove=makeText('button','Supprimer','danger');
+      remove.type='button';
+      remove.addEventListener('click',()=>deleteCourse(course));
+      row.append(edit,toggle,remove);
+      list.append(row);
+    }
+  }
+
+  function editCourse(c){
+    $('courseId').value=c.id;
+    $('title').value=c.title || '';
+    $('category').value=c.category || 'Informatique générale';
+    $('icon').value=c.icon || '💻';
+    $('level').value=c.level || 'Débutant';
+    $('duration').value=c.duration || '';
+    $('price').value=c.price ?? 0;
+    $('description').value=c.description || '';
+    $('tags').value=Array.isArray(c.tags)?c.tags.join(', '):'';
+    $('badge').value=c.badge || '';
+    $('published').checked=!!c.is_published;
+    $('pdfFile').value='';
+    currentPdfPath=c.pdf_path || null;
+    $('existingPdf').textContent=currentPdfPath?'PDF actuel : '+currentPdfPath:'Aucun PDF associé.';
+    $('formTitle').textContent='Modifier une formation';
+    $('saveButton').textContent='Enregistrer les modifications';
+    $('cancelEdit').classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  async function togglePublished(course){
+    const {error}=await supabaseClient.from('courses')
+      .update({is_published:!course.is_published,updated_at:new Date().toISOString()})
+      .eq('id',course.id);
+    if(error){notice('Impossible de changer la publication : '+error.message,'error');return;}
+    await loadCourses();
+    notice('État de publication mis à jour.','success');
+  }
+
+  async function deleteCourse(course){
+    if(!confirm('Supprimer définitivement la formation « '+course.title+' » ?'))return;
+    const {error}=await supabaseClient.from('courses').delete().eq('id',course.id);
+    if(error){notice('Suppression impossible : '+error.message,'error');return;}
+    if(course.pdf_path){
+      const {error:pdfError}=await supabaseClient.storage.from('formations-pdf').remove([course.pdf_path]);
+      if(pdfError)notice('Formation supprimée, mais le PDF n’a pas pu être supprimé.','error');
+    }
+    resetForm();
+    await loadCourses();
+    notice('Formation supprimée.','success');
+  }
+
+  $('refreshButton').addEventListener('click',loadCourses);
+
+  supabaseClient.auth.onAuthStateChange((event)=>{
+    if(event==='SIGNED_OUT'){
+      currentUser=null;
+      $('dashboard').classList.add('hidden');
+      $('loginPanel').classList.remove('hidden');
+    }
+  });
+
+  (async()=>{
+    try{
+      if(await checkAdmin()) await loadCourses();
+    }catch(err){
+      notice(err.message || 'Impossible de vérifier les droits administrateur.','error');
+    }
+  })();
+})();
+</script>
 </body>
-</html>
+  </html>
